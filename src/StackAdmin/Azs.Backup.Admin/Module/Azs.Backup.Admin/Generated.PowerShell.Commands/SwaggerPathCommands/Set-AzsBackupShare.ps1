@@ -150,16 +150,6 @@ function Set-AzsBackupShare {
             $Location = $ArmResourceIdParameterValues['location']
         }
 
-        if ('Update' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            if ($PSBoundParameters.ContainsKey('BackupShare') -or $PSBoundParameters.ContainsKey('Username') -or $PSBoundParameters.ContainsKey('Password'))
-            {
-                if (-not ($PSBoundParameters.ContainsKey('BackupShare') -and $PSBoundParameters.ContainsKey('Username') -and $PSBoundParameters.ContainsKey('Password')))
-                {
-                    throw "-BackupShare, -Username and -Password need to be all specified when trying to configure backup share path."
-                }
-            }
-        }
-
         # Should process
         if ($PSCmdlet.ShouldProcess("$Location" , "Set backup configuration for location.")) {
 
