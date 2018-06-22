@@ -146,13 +146,16 @@ InModuleScope Azs.Backup.Admin {
             $global:TestName = 'TestUpdateBackupLocation'
 
 
-            $backup = Set-AzsBackupShare -ResourceGroupName $global:ResourceGroupName -Location $global:Location -Username $global:username -Password $global:password -BackupShare $global:path -EncryptionKey $global:encryptionKey
+            $backup = Set-AzsBackupShare -ResourceGroupName $global:ResourceGroupName -Location $global:Location -Username $global:username -Password $global:password -BackupShare $global:path -EncryptionKey $global:encryptionKey -IsBackupSchedulerEnabled $global:isBackupSchedulerEnabled -BackupFrequencyInHours $global:backupFrequencyInHours -BackupRetentionPeriodInDays $global:backupRetentionPeriodInDays
 
-            $backup 					| Should Not Be $Null
-            $backup.Path 				| Should Be $global:path
-            $backup.Username 			| Should be $global:username
-            $backup.Password 			| Should be ""
-            $backup.EncryptionKeyBase64 | Should be ""
+            $backup                             | Should Not Be $Null
+            $backup.Path                        | Should Be $global:path
+            $backup.Username                    | Should be $global:username
+            $backup.Password                    | Should be $Null
+            $backup.EncryptionKeyBase64         | Should be $Null
+            $backup.IsBackupSchedulerEnabled    | Should be $global:isBackupSchedulerEnabled
+            $backup.BackupFrequencyInHours      | Should be $global:backupFrequencyInHours
+            $backup.BackupRetentionPeriodInDays | Should be $global:backupRetentionPeriodInDays
         }
 
         # Need to record new tests.
