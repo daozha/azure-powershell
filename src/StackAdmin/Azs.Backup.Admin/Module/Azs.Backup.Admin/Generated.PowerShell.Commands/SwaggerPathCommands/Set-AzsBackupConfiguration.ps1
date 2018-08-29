@@ -105,8 +105,8 @@ function Set-AzsBackupConfiguration {
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
         [ValidateNotNull()]
-        [securestring]
-        $EncryptionCertBase64,
+        [System.String]
+        $EncryptionCertPath,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
@@ -211,8 +211,15 @@ function Set-AzsBackupConfiguration {
                     $InputObject.Password = ConvertTo-String -SecureString $Password
                 }
 
-                if ($PSBoundParameters.ContainsKey('EncryptionCertBase64')) {
-                    $InputObject.EncryptionCertBase64 = ConvertTo-String $EncryptionCertBase64
+                if ($PSBoundParameters.ContainsKey('EncryptionCertPath')) {
+                    if (! (Test-Path $EncryptionCertPath))
+                    {
+                        throw "The specified encryption cert $EncryptionCertPath does not exist"
+                    }
+
+                    $encryptionCertBytes = [System.IO.File]::ReadAllBytes($EncryptionCertPath)
+                    $encryptionCertBase64 = [System.Convert]::ToBase64String($encryptionCertBytes)
+                    $InputObject.EncryptionCertBase64 = $encryptionCertBase64
                 }
 
                 if ($PSBoundParameters.ContainsKey('IsBackupSchedulerEnabled')) {
