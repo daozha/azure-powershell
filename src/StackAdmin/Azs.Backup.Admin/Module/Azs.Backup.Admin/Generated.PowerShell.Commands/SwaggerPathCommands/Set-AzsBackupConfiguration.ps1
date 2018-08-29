@@ -212,7 +212,7 @@ function Set-AzsBackupConfiguration {
                 }
 
                 if ($PSBoundParameters.ContainsKey('EncryptionCertPath')) {
-                    if (! (Test-Path $EncryptionCertPath))
+                    if (!(Test-Path $EncryptionCertPath))
                     {
                         throw "The specified encryption cert $EncryptionCertPath does not exist"
                     }
