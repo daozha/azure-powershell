@@ -106,7 +106,7 @@ function Set-AzsBackupConfiguration {
         [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
         [ValidateNotNull()]
         [securestring]
-        $EncryptionKey,
+        $EncryptionCertBase64,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
@@ -211,8 +211,8 @@ function Set-AzsBackupConfiguration {
                     $InputObject.Password = ConvertTo-String -SecureString $Password
                 }
 
-                if ($PSBoundParameters.ContainsKey('EncryptionKey')) {
-                    $InputObject.EncryptionKeyBase64 = ConvertTo-String $EncryptionKey
+                if ($PSBoundParameters.ContainsKey('EncryptionCertBase64')) {
+                    $InputObject.EncryptionCertBase64 = ConvertTo-String $EncryptionCertBase64
                 }
 
                 if ($PSBoundParameters.ContainsKey('IsBackupSchedulerEnabled')) {
