@@ -199,7 +199,7 @@ function Set-AzsBackupConfiguration {
                     $InputObject = Get-AzsBackupConfiguration -ResourceGroupName $ResourceGroupName -Location $Location
                 }
 
-                if ($PSBoundParameters.ContainsKey('BackupShare')) {
+                if ($PSBoundParameters.ContainsKey('Path')) {
                     $InputObject.Path = $Path
                 }
 
