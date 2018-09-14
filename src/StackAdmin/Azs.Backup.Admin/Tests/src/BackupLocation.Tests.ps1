@@ -149,7 +149,8 @@ InModuleScope Azs.Backup.Admin {
         It "TestUpdateBackupLocation" -Skip:$('TestUpdateBackupLocation' -in $global:SkippedTests) {
             $global:TestName = 'TestUpdateBackupLocation'
 
-            $backup = Set-AzsBackupConfiguration -ResourceGroupName $global:ResourceGroupName -Location $global:Location -Username $global:username -Password $global:password -Path $global:path -EncryptionCertBase64 $global:encryptionCert -IsBackupSchedulerEnabled $global:isBackupSchedulerEnabled -BackupFrequencyInHours $global:backupFrequencyInHours -BackupRetentionPeriodInDays $global:backupRetentionPeriodInDays
+            [System.IO.File]::WriteAllBytes($global:encryptionCertPath, [System.Convert]::FromBase64String($global:encryptionCertBase64))
+            $backup = Set-AzsBackupConfiguration -ResourceGroupName $global:ResourceGroupName -Location $global:Location -Username $global:username -Password $global:password -Path $global:path -EncryptionCertPath $global:encryptionCertPath -IsBackupSchedulerEnabled $global:isBackupSchedulerEnabled -BackupFrequencyInHours $global:backupFrequencyInHours -BackupRetentionPeriodInDays $global:backupRetentionPeriodInDays
 
             $backup                             | Should Not Be $Null
             $backup.Path                        | Should Be $global:path
@@ -175,7 +176,9 @@ InModuleScope Azs.Backup.Admin {
 
             $backup = Start-AzsBackup -ResourceGroupName $global:ResourceGroupName -Location $global:Location -Force
             $backup 					| Should Not Be $Null
-            Restore-AzsBackup -ResourceGroupName $global:ResourceGroupName -Location $global:Location -Name $backup.Name -Force
+
+            [System.IO.File]::WriteAllBytes($global:decryptionCertPath, [System.Convert]::FromBase64String($global:decryptionCertBase64))
+            Restore-AzsBackup -ResourceGroupName $global:ResourceGroupName -Location $global:Location -Name $backup.Name -DecryptionCertPath $global:decryptionCertPath -DecryptionCertPassword $global:decryptionCertPassword -Force
         }
     }
 }
