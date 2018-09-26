@@ -131,7 +131,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
             # IconUri = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = '## 2018.XX.XX(TBD) - Version 0.3.0
+            ReleaseNotes = '## 2018.XX.XX(TBD)
             * Backup changes to cert-based encryption mode
                 * Set-AzsBackupConfiguration now accepts parameter EncryptionCertPath instead of EncryptionKey
                 * Restore-AzsBackup now requires parameter DecryptionCertPath and DecryptionCertPassword
