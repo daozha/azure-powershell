@@ -115,7 +115,7 @@ InModuleScope Azs.Backup.Admin {
         It "TestListBackupLocation" -Skip:$('TestListBackupLocation' -in $global:SkippedTests) {
             $global:TestName = 'TestListBackupLocations'
 
-            $backupLocations = Get-AzsBackupConfiguration -Location $global:Location
+            $backupLocations = Get-AzsBackupConfiguration -ResourceGroupName $global:ResourceGroupName
             $backupLocations  | Should Not Be $null
             foreach ($backupLocation in $backupLocations) {
                 ValidateBackupLocation -BackupLocation $backupLocation
@@ -125,7 +125,7 @@ InModuleScope Azs.Backup.Admin {
         It "TestGetBackupLocation" -Skip:$('TestGetBackupLocation' -in $global:SkippedTests) {
             $global:TestName = 'TestGetBackupLocation'
 
-            $backupLocations = Get-AzsBackupConfiguration -Location $global:Location
+            $backupLocations = Get-AzsBackupConfiguration -ResourceGroupName $global:ResourceGroupName
             $backupLocations  | Should Not Be $null
             foreach ($backupLocation in $backupLocations) {
                 $result = Get-AzsBackupConfiguration -Location $backupLocation.Name
