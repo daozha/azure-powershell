@@ -92,32 +92,50 @@ directive:
       default:
         script: '"system.$((Get-AzLocation)[0].Name)"'
 
-    # Rename Get-BackupLocation to Get-BackupConfiguration
+    # Rename parameter Backup to Name
   - where:
-      verb: Get
+      subject: Backup
+      parameter-name: Backup
+    set:
+      parameter-name: Name
+
+    # Rename Get/Set-AzsBackupLocation to Get/Set-AzsBackupConfiguration
+  - where:
       subject: BackupLocation
     set:
       subject: BackupConfiguration
 
-    # Hide Set-BackupLocation and expose it through customized Set-AzsBackupConfiguration
+    # Rename cmdlet parameter names in Set-AzsBackupConfiguration
   - where:
       verb: Set
-      subject: BackupLocation
-    hide: true
-
-    # Rename cmdlet parameter names in Set-BackupLocation
-  - where:
-      verb: Set
-      subject: BackupLocation
+      subject: BackupConfiguration
       parameter-name: ^ExternalStoreDefault(.+)
     set:
       parameter-name: $1
   - where:
       verb: Set
-      subject: BackupLocation
+      subject: BackupConfiguration
       parameter-name: Backup
     set:
       parameter-name: InputObject
+
+    # Hide the auto-generated Set-AzsBackupConfiguration and expose it through customized one
+  - where:
+      verb: Set
+      subject: BackupConfiguration
+    hide: true
+
+    # Hide the auto-generated Restore-AzsBackup and expose it through customized one
+  - where:
+      verb: Restore
+      subject: Backup
+    hide: true
+
+    # Hide the auto-generated Restore-AzsBackup and expose it through customized one
+  - where:
+      verb: Get
+      subject: Backup
+    hide: true
 
     # Rename New-AzsBackupLocationBackup to Start-AzsBackup
   - where:

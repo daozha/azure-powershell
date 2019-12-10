@@ -192,6 +192,6 @@ process {
         $PSBoundParameters.Add('EncryptionCertBase64', $EncryptionCertBase64)
     }
 
-    Azs.Backup.Admin.internal\Set-AzsBackupLocation @PSBoundParameters
+    Azs.Backup.Admin.internal\Set-AzsBackupConfiguration @PSBoundParameters
 }
 }
