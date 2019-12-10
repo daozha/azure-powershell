@@ -63,20 +63,6 @@ psm1: Azs.Backup.Admin.psm1
 ### Parameter default values
 ``` yaml
 directive:
-    # Rename Get/Set-BackupLocation to BackupConfiguration
-  - where:
-      subject: BackupLocation
-    set:
-      subject: BackupConfiguration
-
-    # Rename New-AzsBackupLocationBackup to Start-AzsBackup
-  - where:
-      verb: New
-      subject: BackupLocationBackup
-    set:
-      verb: Start
-      subject: Backup
-
     # Default to Format-List for the Backup and BackupLocation model as there are many important fields
   - where:
       model-name: Backup
@@ -99,20 +85,6 @@ directive:
     set:
       property-name: $1
 
-    # Rename cmdlet parameter names
-  - where:
-      verb: Set
-      subject: BackupConfiguration
-      parameter-name: ^ExternalStoreDefault(.+)
-    set:
-      parameter-name: $1
-  - where:
-      verb: Set
-      subject: BackupConfiguration
-      parameter-name: Backup
-    set:
-      parameter-name: InputObject
-
     # Default value for ResourceGroupName
   - where:
       parameter-name: ResourceGroupName
@@ -120,14 +92,40 @@ directive:
       default:
         script: '"system.$((Get-AzLocation)[0].Name)"'
 
-    # Default value for Location1
+    # Rename Get-BackupLocation to Get-BackupConfiguration
+  - where:
+      verb: Get
+      subject: BackupLocation
+    set:
+      subject: BackupConfiguration
+
+    # Hide Set-BackupLocation and expose it through customized Set-AzsBackupConfiguration
   - where:
       verb: Set
-      subject: BackupConfiguration
-      parameter-name: Location1
+      subject: BackupLocation
+    hide: true
+
+    # Rename cmdlet parameter names in Set-BackupLocation
+  - where:
+      verb: Set
+      subject: BackupLocation
+      parameter-name: ^ExternalStoreDefault(.+)
     set:
-      default:
-        script: '$Location'
+      parameter-name: $1
+  - where:
+      verb: Set
+      subject: BackupLocation
+      parameter-name: Backup
+    set:
+      parameter-name: InputObject
+
+    # Rename New-AzsBackupLocationBackup to Start-AzsBackup
+  - where:
+      verb: New
+      subject: BackupLocationBackup
+    set:
+      verb: Start
+      subject: Backup
 
 subject-prefix: ''
 module-version: 0.0.1
