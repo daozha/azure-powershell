@@ -50,13 +50,84 @@ require:
   - $(this-folder)/../readme.azurestack.md
   - $(repo)/specification/azsadmin/resource-manager/backup/readme.azsautogen.md
   - $(repo)/specification/azsadmin/resource-manager/backup/readme.md
+```
 
 ### File Renames 
+``` yaml
 module-name: Azs.Backup.Admin 
 csproj: Azs.Backup.Admin.csproj 
 psd1: Azs.Backup.Admin.psd1 
 psm1: Azs.Backup.Admin.psm1
+```
+
+### Parameter default values
+``` yaml
+directive:
+    # Rename Get/Set-BackupLocation to BackupConfiguration
+  - where:
+      subject: BackupLocation
+    set:
+      subject: BackupConfiguration
+
+    # Rename New-AzsBackupLocationBackup to Start-AzsBackup
+  - where:
+      verb: New
+      subject: BackupLocationBackup
+    set:
+      verb: Start
+      subject: Backup
+
+    # Default to Format-List for the Backup and BackupLocation model as there are many important fields
+  - where:
+      model-name: Backup
+    set:
+      suppress-format: true
+  - where:
+      model-name: BackupLocation
+    set:
+      suppress-format: true
+
+    # Rename model property names
+  - where:
+      model-name: BackupLocation
+      property-name: ^ExternalStoreDefault(.+)
+    set:
+      property-name: $1
+  - where:
+      model-name: Backup
+      property-name: ^Info(.+)
+    set:
+      property-name: $1
+
+    # Rename cmdlet parameter names
+  - where:
+      verb: Set
+      subject: BackupConfiguration
+      parameter-name: ^ExternalStoreDefault(.+)
+    set:
+      parameter-name: $1
+  - where:
+      verb: Set
+      subject: BackupConfiguration
+      parameter-name: Backup
+    set:
+      parameter-name: InputObject
+
+    # Default value for ResourceGroupName
+  - where:
+      parameter-name: ResourceGroupName
+    set:
+      default:
+        script: '"system.$((Get-AzLocation)[0].Name)"'
+
+    # Default value for Location1
+  - where:
+      verb: Set
+      subject: BackupConfiguration
+      parameter-name: Location1
+    set:
+      default:
+        script: '$Location'
 
 subject-prefix: ''
 module-version: 0.0.1
-```
