@@ -17,8 +17,8 @@ INPUTOBJECT <IBackupLocation>: Information about the backup location.
   [Location <String>]: Location of the resource.
   [Tag <IResourceTags>]: List of key value pairs.
     [(Any) <String>]: This indicates any property can be added to this object.
-  [BackupFrequencyInHour <Int32?>]: The interval, in hours, for the frequency that the scheduler takes a backup.
-  [BackupRetentionPeriodInDay <Int32?>]: The retention period, in days, for backs in the storage location.
+  [BackupFrequencyInHours <Int32?>]: The interval, in hours, for the frequency that the scheduler takes a backup.
+  [BackupRetentionPeriodInDays <Int32?>]: The retention period, in days, for backs in the storage location.
   [EncryptionCertBase64 <String>]: The base64 raw data for the backup encryption certificate.
   [IsBackupSchedulerEnabled <Boolean?>]: True if the backup scheduler is enabled.
   [Password <String>]: Password to access the location.
@@ -64,13 +64,13 @@ param(
     [Microsoft.Azure.PowerShell.Cmdlets.BackupAdmin.Category('Body')]
     [System.Int32]
     # The interval, in hours, for the frequency that the scheduler takes a backup.
-    ${BackupFrequencyInHour},
+    ${BackupFrequencyInHours},
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Microsoft.Azure.PowerShell.Cmdlets.BackupAdmin.Category('Body')]
     [System.Int32]
     # The retention period, in days, for backs in the storage location.
-    ${BackupRetentionPeriodInDay},
+    ${BackupRetentionPeriodInDays},
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Microsoft.Azure.PowerShell.Cmdlets.BackupAdmin.Category('Body')]

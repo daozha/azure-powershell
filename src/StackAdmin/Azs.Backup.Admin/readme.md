@@ -80,6 +80,16 @@ directive:
     set:
       property-name: $1
   - where:
+      model-name: BackupLocation
+      property-name: BackupFrequencyInHour
+    set:
+      property-name: BackupFrequencyInHours
+  - where:
+      model-name: BackupLocation
+      property-name: BackupRetentionPeriodInDay
+    set:
+      property-name: BackupRetentionPeriodInDays
+  - where:
       model-name: Backup
       property-name: ^Info(.+)
     set:
@@ -118,6 +128,18 @@ directive:
       parameter-name: Backup
     set:
       parameter-name: InputObject
+  - where:
+      verb: Set
+      subject: BackupConfiguration
+      parameter-name: BackupFrequencyInHour
+    set:
+      parameter-name: BackupFrequencyInHours
+  - where:
+      verb: Set
+      subject: BackupConfiguration
+      parameter-name: BackupRetentionPeriodInDay
+    set:
+      parameter-name: BackupRetentionPeriodInDays
 
     # Hide the auto-generated Set-AzsBackupConfiguration and expose it through customized one
   - where:
@@ -131,7 +153,7 @@ directive:
       subject: Backup
     hide: true
 
-    # Hide the auto-generated Restore-AzsBackup and expose it through customized one
+    # Hide the auto-generated Get-AzsBackup and expose it through customized one
   - where:
       verb: Get
       subject: Backup
@@ -144,6 +166,12 @@ directive:
     set:
       verb: Start
       subject: Backup
+
+    # Hide the auto-generated Start-AzsBackup and expose it through customized one
+  - where:
+      verb: Start
+      subject: Backup
+    hide: true
 
 subject-prefix: ''
 module-version: 0.0.1

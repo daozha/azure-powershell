@@ -165,7 +165,13 @@ param(
     [Microsoft.Azure.PowerShell.Cmdlets.BackupAdmin.Category('Runtime')]
     [System.Management.Automation.SwitchParameter]
     # Use the default credentials for the proxy
-    ${ProxyUseDefaultCredentials}
+    ${ProxyUseDefaultCredentials},
+
+    [Parameter()]
+    [Microsoft.Azure.PowerShell.Cmdlets.BackupAdmin.Category('Runtime')]
+    [System.Management.Automation.SwitchParameter]
+    # Don't ask for confirmation
+    $Force
 )
 
 process {
@@ -198,6 +204,17 @@ process {
         $PSBoundParameters.Add('DecryptionCertBase64', $DecryptionCertBase64)
     }
 
-    Azs.Backup.Admin.internal\Restore-AzsBackup @PSBoundParameters
+    if ($PSCmdlet.ShouldProcess("$Name" , "Restore from backup at location $Location"))
+    {
+        if ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Restore from backup at location $($Location)?", "Performing operation restore using backup $Name."))
+        {
+            if ($PSBoundParameters.ContainsKey(('Force')))
+            {
+                $null = $PSBoundParameters.Remove('Force')
+            }
+        
+            Azs.Backup.Admin.internal\Restore-AzsBackup @PSBoundParameters
+        }
+    }
 }
 }
