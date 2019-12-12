@@ -125,12 +125,6 @@ directive:
   - where:
       verb: Set
       subject: BackupConfiguration
-      parameter-name: Backup
-    set:
-      parameter-name: InputObject
-  - where:
-      verb: Set
-      subject: BackupConfiguration
       parameter-name: BackupFrequencyInHour
     set:
       parameter-name: BackupFrequencyInHours

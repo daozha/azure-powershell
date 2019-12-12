@@ -13,7 +13,7 @@ Microsoft.Azure.PowerShell.Cmdlets.BackupAdmin.Models.Api20180901.IBackupLocatio
 COMPLEX PARAMETER PROPERTIES
 To create the parameters described below, construct a hash table containing the appropriate properties. For information on hash tables, run Get-Help about_Hash_Tables.
 
-INPUTOBJECT <IBackupLocation>: Information about the backup location.
+BACKUP <IBackupLocation>: Information about the backup location.
   [Location <String>]: Location of the resource.
   [Tag <IResourceTags>]: List of key value pairs.
     [(Any) <String>]: This indicates any property can be added to this object.
@@ -57,8 +57,8 @@ param(
     [Microsoft.Azure.PowerShell.Cmdlets.BackupAdmin.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.BackupAdmin.Models.Api20180901.IBackupLocation]
     # Information about the backup location.
-    # To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
-    ${InputObject},
+    # To construct, see NOTES section for BACKUP properties and create a hash table.
+    ${Backup},
 
     [Parameter(ParameterSetName='UpdateExpanded')]
     [Microsoft.Azure.PowerShell.Cmdlets.BackupAdmin.Category('Body')]

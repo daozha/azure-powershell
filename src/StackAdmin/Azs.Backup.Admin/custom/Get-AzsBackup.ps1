@@ -113,6 +113,7 @@ param(
 )
 
 process {
+    # Generated SDK does not support {location}/{name} for nested resource name, so extract the {name} part here
     if ($PSBoundParameters.ContainsKey(('Name')))
     {
         if ($null -ne $Name -and $Name.Contains('/'))
