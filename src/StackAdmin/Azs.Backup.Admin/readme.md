@@ -74,6 +74,7 @@ directive:
       suppress-format: true
 
     # Rename model property names
+    # Remove "ExternalStoreDefault" from properties InfoStatus, InfoCreatedDateTime, InfoEncryptionCertThumbprint, etc.
   - where:
       model-name: BackupLocation
       property-name: ^ExternalStoreDefault(.+)
@@ -89,6 +90,7 @@ directive:
       property-name: BackupRetentionPeriodInDay
     set:
       property-name: BackupRetentionPeriodInDays
+    # Remove "Info" from properties ExternalStoreDefaultPath, ExternalStoreDefaultUserName, ExternalStoreDefaultPassword, etc.
   - where:
       model-name: Backup
       property-name: ^Info(.+)
@@ -116,6 +118,7 @@ directive:
       subject: BackupConfiguration
 
     # Rename cmdlet parameter names in Set-AzsBackupConfiguration
+    # Remove "ExternalStoreDefault" from parameters ExternalStoreDefaultPath, ExternalStoreDefaultUserName, ExternalStoreDefaultPassword, etc.
   - where:
       verb: Set
       subject: BackupConfiguration
