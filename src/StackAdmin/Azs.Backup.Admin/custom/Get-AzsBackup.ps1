@@ -64,6 +64,18 @@ param(
     # To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
     ${InputObject},
 
+    [Parameter(ParameterSetName='List')]
+    [Microsoft.Azure.PowerShell.Cmdlets.BackupAdmin.Category('Query')]
+    [System.String]
+    # OData skip parameter.
+    ${Skip},
+
+    [Parameter(ParameterSetName='List')]
+    [Microsoft.Azure.PowerShell.Cmdlets.BackupAdmin.Category('Query')]
+    [System.String]
+    # OData top parameter.
+    ${Top},
+
     [Parameter()]
     [Alias('AzureRMContext', 'AzureCredential')]
     [ValidateNotNull()]

@@ -170,7 +170,11 @@ param(
 )
 
 process {
-    $PSBoundParameters.Add('Location1', $Location)
+    if ($PSCmdlet.ParameterSetName -eq 'UpdateExpanded')
+    {
+        $PSBoundParameters.Add('Location1', $Location)
+    }
+    
     if ($PSBoundParameters.ContainsKey(('Password')))
     {
         $Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($Password)

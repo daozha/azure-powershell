@@ -73,8 +73,8 @@ param(
     # To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
     ${InputObject},
 
-    [Parameter(ParameterSetName='Restore', Mandatory, ValueFromPipeline)]
-    [Parameter(ParameterSetName='RestoreViaIdentity', Mandatory, ValueFromPipeline)]
+    [Parameter(ParameterSetName='Restore', Mandatory)]
+    [Parameter(ParameterSetName='RestoreViaIdentity', Mandatory)]
     [Microsoft.Azure.PowerShell.Cmdlets.BackupAdmin.Category('Body')]
     [Microsoft.Azure.PowerShell.Cmdlets.BackupAdmin.Models.Api20180901.IRestoreOptions]
     # Properties for restore options.
@@ -175,6 +175,15 @@ param(
 )
 
 process {
+    # The resource ID of backup does not match the required resource ID for restore operation. Directly get the backup and call with Name.
+    if  ($PSBoundParameters.ContainsKey(('InputObject')))
+    {
+        $Backup = Get-AzsBackup -InputObject $InputObject
+        $null = $PSBoundParameters.Remove('InputObject')
+        $Name = $Backup.Name
+        $PSBoundParameters.Add('Name', $Backup.Name)
+    }
+
     # Generated SDK does not support {location}/{name} for nested resource name, so extract the {name} part here
     if ($PSBoundParameters.ContainsKey(('Name')))
     {
